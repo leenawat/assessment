@@ -114,13 +114,13 @@ class LoterryServiceTest {
     void testFindAll() {
         // Arrange
         ArrayList<Lottery> lotteryList = new ArrayList<>();
-        when(lotteryRepository.findAll()).thenReturn(lotteryList);
+        when(lotteryRepository.findAllAvailableLottery()).thenReturn(lotteryList);
 
         // Act
         TicketListResponseDto actualFindAllResult = lotteryService.findAll();
 
         // Assert
-        verify(lotteryRepository).findAll();
+        verify(lotteryRepository).findAllAvailableLottery();
         assertEquals(lotteryList, actualFindAllResult.getTickets());
     }
 
@@ -138,13 +138,13 @@ class LoterryServiceTest {
 
         ArrayList<Lottery> lotteryList = new ArrayList<>();
         lotteryList.add(lottery);
-        when(lotteryRepository.findAll()).thenReturn(lotteryList);
+        when(lotteryRepository.findAllAvailableLottery()).thenReturn(lotteryList);
 
         // Act
         TicketListResponseDto actualFindAllResult = lotteryService.findAll();
 
         // Assert
-        verify(lotteryRepository).findAll();
+        verify(lotteryRepository).findAllAvailableLottery();
         assertEquals(1, actualFindAllResult.getTickets().size());
     }
 
@@ -168,13 +168,13 @@ class LoterryServiceTest {
         ArrayList<Lottery> lotteryList = new ArrayList<>();
         lotteryList.add(lottery);
         lotteryList.add(lottery2);
-        when(lotteryRepository.findAll()).thenReturn(lotteryList);
+        when(lotteryRepository.findAllAvailableLottery()).thenReturn(lotteryList);
 
         // Act
         TicketListResponseDto actualFindAllResult = lotteryService.findAll();
 
         // Assert
-        verify(lotteryRepository).findAll();
+        verify(lotteryRepository).findAllAvailableLottery();
         assertEquals(2, actualFindAllResult.getTickets().size());
     }
 
@@ -183,7 +183,7 @@ class LoterryServiceTest {
      */
     @Test
     @DisplayName("service return 1 ticket when repo return 1 ticket and call tickets size()")
-    void testFindAllSholdCallTicketSizeForCreateDto() {
+    void testFindAllShouldCallTicketSizeForCreateDto() {
         // Arrange
         Lottery lottery = new Lottery();
         lottery.setAmount(AMOUNT);
@@ -192,13 +192,13 @@ class LoterryServiceTest {
 
         ArrayList<Lottery> lotteryList = new ArrayList<>();
         lotteryList.add(lottery);
-        when(lotteryRepository.findAll()).thenReturn(lotteryList);
+        when(lotteryRepository.findAllAvailableLottery()).thenReturn(lotteryList);
 
         // Act
         TicketListResponseDto actualFindAllResult = lotteryService.findAll();
 
         // Assert
-        verify(lotteryRepository).findAll();
+        verify(lotteryRepository).findAllAvailableLottery();
         assertEquals(1, actualFindAllResult.getTickets().size());
     }
 }

@@ -14,7 +14,7 @@
 * [x] จะต้อง มีการใช้งาน PostgreSQL
 * [x] จะต้อง มีการใช้งานสร้าง Table ชื่อ lottery เพื่อใช้จัดการกับลอตเตอรี่และ user_ticket เพื่อใช้เก็บรายการซื้อขายของผู้ใช้งาน
 * [x] จะต้อง เปิดใช้งานได้ผ่าน port 8888
-* [ ] จะต้อง เรียกใช้ Database URL ผ่านทาง Environment variable ชื่อ DATABASE_URL ได้
+* [x] จะต้อง เรียกใช้ Database URL ผ่านทาง Environment variable ชื่อ DATABASE_URL ได้
 
 ### EXP01
 #### default
@@ -30,8 +30,6 @@
 #### default
 * [x] GET /lotteries
 * [x] Response Body
-#### extra
-* [ ] admin/ user read lotteries all from postgres database
 
 ### EXP03
 * [x] POST /users/:userId/lotteries/:ticketId
@@ -58,7 +56,7 @@
 * [x] กรณี error ต่างๆ ให้ระบบ response status code ตามความเหมาะสม เช่น
 * [x] 400 StatusBadRequest
 * [x] 500 StatusInternalServerError
-* [ ] มีการ Validate ข้อมูลที่รับมา เช่น จำนวนตัวอักษรที่รับได้
+* [x] มีการ Validate ข้อมูลที่รับมา เช่น จำนวนตัวอักษรที่รับได้
 * [x] มีการป้องกันการใช้งาน API ของแอดมิน
 * [x] มีการทำ Containerize ให้ใช้งานผ่าน Docker ได้
 * [x] มี Test case เช่น Unit test ครอบคลุมส่วนของโค้ดและคะแนนจะขึ้นอยู่กับ Coverage ของ Test case ด้วย

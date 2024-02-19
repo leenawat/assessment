@@ -6,6 +6,7 @@ import com.kbtg.bootcamp.posttest.lottery.model.Lottery;
 import com.kbtg.bootcamp.posttest.lottery.repository.LotteryRepository;
 import com.kbtg.bootcamp.posttest.userticket.dto.UserTickerSummaryDto;
 import com.kbtg.bootcamp.posttest.userticket.dto.UserTicketDto;
+import com.kbtg.bootcamp.posttest.userticket.exception.InvalidUserTicketException;
 import com.kbtg.bootcamp.posttest.userticket.model.UserTicket;
 import com.kbtg.bootcamp.posttest.userticket.repository.UserTicketRepository;
 import org.springframework.stereotype.Service;
@@ -29,9 +30,9 @@ public class UserTicketService {
         UserTicket userTicket = new UserTicket();
 
         Optional<Lottery> optional = lotteryRepository.findById(ticketId);
-        Lottery lottery = null;
+        Lottery lottery;
 
-        if (!optional.isPresent()) {
+        if (optional.isEmpty()) {
             throw new LotteryUnavailableException("Lottery Unavailable Exception");
         } else {
             lottery = optional.get();
@@ -74,19 +75,20 @@ public class UserTicketService {
     }
 
     public TicketResponseDto deleteLotteriesByUserId(String userId, String ticketId) {
-        try {
-            List<UserTicket> byUser = userTicketRepository.findByUserIdAndTicketId(userId, ticketId);
-            if (byUser.size() > 0) {
-                userTicketRepository.delete(byUser.get(0));
-                Lottery lottery = lotteryRepository.findById(ticketId).get();
+        List<UserTicket> byUser = userTicketRepository.findByUserIdAndTicketId(userId, ticketId);
+        if (!byUser.isEmpty()) {
+            userTicketRepository.delete(byUser.get(0));
+            Optional<Lottery> optional = lotteryRepository.findById(ticketId);
+            if(optional.isPresent()) {
+                Lottery lottery = optional.get();
                 lottery.setAmount(1);
                 lotteryRepository.save(lottery);
                 return new TicketResponseDto(ticketId);
-            } else {
-                return null;
+            }else{
+                throw new InvalidUserTicketException("Invalid userId or ticketId");
             }
-        } catch (Exception e) {
-            return null;
+        } else {
+            throw new InvalidUserTicketException("Invalid userId or ticketId");
         }
     }
 }
