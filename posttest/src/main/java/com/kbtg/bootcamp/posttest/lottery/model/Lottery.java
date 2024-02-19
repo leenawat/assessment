@@ -18,7 +18,7 @@ public class Lottery {
 
     @Id
     @Column(name = "ticket_id", length = 6)
-    @Size(min = 10, max = 10)
+    @Size(min = 6, max = 6)
     private String ticket;
 
     private Integer price;

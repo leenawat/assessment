@@ -33,9 +33,9 @@ public class UserTicketService {
 
         if (!optional.isPresent()) {
             throw new LotteryUnavailableException("Lottery Unavailable Exception");
-        }else{
+        } else {
             lottery = optional.get();
-            if(lottery.getAmount() <= 0) {
+            if (lottery.getAmount() <= 0) {
                 throw new LotteryUnavailableException("Lottery Unavailable Exception");
             }
 
@@ -75,7 +75,7 @@ public class UserTicketService {
 
     public TicketResponseDto deleteLotteriesByUserId(String userId, String ticketId) {
         try {
-            List<UserTicket> byUser = userTicketRepository.findByUserId(userId);
+            List<UserTicket> byUser = userTicketRepository.findByUserIdAndTicketId(userId, ticketId);
             if (byUser.size() > 0) {
                 userTicketRepository.delete(byUser.get(0));
                 Lottery lottery = lotteryRepository.findById(ticketId).get();

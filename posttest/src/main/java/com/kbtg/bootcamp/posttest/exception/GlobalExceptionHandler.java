@@ -1,5 +1,6 @@
 package com.kbtg.bootcamp.posttest.exception;
 
+import com.kbtg.bootcamp.posttest.lottery.exception.LotteryDuplicateException;
 import com.kbtg.bootcamp.posttest.lottery.exception.LotteryUnavailableException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
@@ -37,6 +38,19 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ErrorDTO handleLotteryUnavailableException(HttpServletRequest request, Exception ex) {
+        ErrorDTO error = new ErrorDTO();
+        error.setTimestamp(new Date());
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.addError(ex.getMessage());
+        error.setPath(request.getServletPath());
+        LOGGER.error(ex.getMessage(), ex);
+        return error;
+    }
+
+    @ExceptionHandler(LotteryDuplicateException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ErrorDTO handleLotteryDuplicateException(HttpServletRequest request, Exception ex) {
         ErrorDTO error = new ErrorDTO();
         error.setTimestamp(new Date());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
