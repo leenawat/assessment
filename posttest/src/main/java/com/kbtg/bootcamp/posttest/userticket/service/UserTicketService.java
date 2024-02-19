@@ -9,6 +9,7 @@ import com.kbtg.bootcamp.posttest.userticket.dto.UserTicketDto;
 import com.kbtg.bootcamp.posttest.userticket.exception.InvalidUserTicketException;
 import com.kbtg.bootcamp.posttest.userticket.model.UserTicket;
 import com.kbtg.bootcamp.posttest.userticket.repository.UserTicketRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -74,6 +75,7 @@ public class UserTicketService {
         return sum;
     }
 
+    @Transactional
     public TicketResponseDto deleteLotteriesByUserId(String userId, String ticketId) {
         List<UserTicket> byUser = userTicketRepository.findByUserIdAndTicketId(userId, ticketId);
         if (!byUser.isEmpty()) {
