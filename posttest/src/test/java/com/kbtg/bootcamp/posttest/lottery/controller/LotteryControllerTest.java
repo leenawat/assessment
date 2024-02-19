@@ -5,7 +5,7 @@ import com.kbtg.bootcamp.posttest.lottery.dto.LotteryRequestDto;
 import com.kbtg.bootcamp.posttest.lottery.dto.TicketListResponseDto;
 import com.kbtg.bootcamp.posttest.lottery.dto.TicketResponseDto;
 import com.kbtg.bootcamp.posttest.lottery.model.Lottery;
-import com.kbtg.bootcamp.posttest.lottery.service.LoterryService;
+import com.kbtg.bootcamp.posttest.lottery.service.LotteryService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
 class LotteryControllerTest {
     public static final String TICKET = "000001";
     @MockBean
-    private LoterryService loterryService;
+    private LotteryService lotteryService;
 
     @Autowired
     private LotteryController lotteryController;
@@ -38,7 +38,7 @@ class LotteryControllerTest {
     @DisplayName("should return 201 and ticket when create success")
     void testCreate() throws Exception {
         // Arrange
-        when(loterryService.save(Mockito.<LotteryRequestDto>any())).thenReturn(new TicketResponseDto(TICKET));
+        when(lotteryService.save(Mockito.<LotteryRequestDto>any())).thenReturn(new TicketResponseDto(TICKET));
 
         Lottery lottery = new Lottery();
         lottery.setAmount(1);
@@ -62,7 +62,7 @@ class LotteryControllerTest {
     @DisplayName("should return null when no lottery")
     void testRead() throws Exception {
         // Arrange
-        when(loterryService.findAll()).thenReturn(new TicketListResponseDto());
+        when(lotteryService.findAll()).thenReturn(new TicketListResponseDto());
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/lotteries");
 
         // Act and Assert

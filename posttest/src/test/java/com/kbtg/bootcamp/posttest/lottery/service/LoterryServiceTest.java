@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.*;
 
-@ContextConfiguration(classes = {LoterryService.class})
+@ContextConfiguration(classes = {LotteryService.class})
 @ExtendWith(SpringExtension.class)
 @DisabledInAotMode
 class LoterryServiceTest {
@@ -33,13 +33,13 @@ class LoterryServiceTest {
     public static final String TICKET2 = "000002";
 
     @Autowired
-    private LoterryService loterryService;
+    private LotteryService lotteryService;
 
     @MockBean
     private LotteryRepository lotteryRepository;
 
     /**
-     * Method under test: {@link LoterryService#save(LotteryRequestDto)}
+     * Method under test: {@link LotteryService#save(LotteryRequestDto)}
      */
     @Test
     @DisplayName("before save check ticket from db 1 time")
@@ -53,12 +53,12 @@ class LoterryServiceTest {
         when(lotteryRepository.findById(Mockito.<String>any())).thenReturn(ofResult);
 
         // Act and Assert
-        assertThrows(RuntimeException.class, () -> loterryService.save(new LotteryRequestDto()));
+        assertThrows(RuntimeException.class, () -> lotteryService.save(new LotteryRequestDto()));
         verify(lotteryRepository, times(1)).findById(isNull());
     }
 
     /**
-     * Method under test: {@link LoterryService#save(LotteryRequestDto)}
+     * Method under test: {@link LotteryService#save(LotteryRequestDto)}
      */
     @Test
     @DisplayName("save success when data not exist")
@@ -73,7 +73,7 @@ class LoterryServiceTest {
         when(lotteryRepository.findById(Mockito.<String>any())).thenReturn(emptyResult);
 
         // Act
-        TicketResponseDto actualSaveResult = loterryService.save(new LotteryRequestDto());
+        TicketResponseDto actualSaveResult = lotteryService.save(new LotteryRequestDto());
 
         // Assert
         verify(lotteryRepository).findById(isNull());
@@ -82,7 +82,7 @@ class LoterryServiceTest {
     }
 
     /**
-     * Method under test: {@link LoterryService#save(LotteryRequestDto)}
+     * Method under test: {@link LotteryService#save(LotteryRequestDto)}
      */
     @Test
     @DisplayName("save success when data not exist and return ticket")
@@ -98,7 +98,7 @@ class LoterryServiceTest {
         when(lotteryRepository.findById(Mockito.<String>any())).thenReturn(emptyResult);
 
         // Act
-        TicketResponseDto actualSaveResult = loterryService.save(new LotteryRequestDto());
+        TicketResponseDto actualSaveResult = lotteryService.save(new LotteryRequestDto());
 
         // Assert
         verify(lotteryRepository).findById(isNull());
@@ -107,7 +107,7 @@ class LoterryServiceTest {
     }
 
     /**
-     * Method under test: {@link LoterryService#findAll()}
+     * Method under test: {@link LotteryService#findAll()}
      */
     @Test
     @DisplayName("service return all tickets when repo return all tickets")
@@ -117,7 +117,7 @@ class LoterryServiceTest {
         when(lotteryRepository.findAll()).thenReturn(lotteryList);
 
         // Act
-        TicketListResponseDto actualFindAllResult = loterryService.findAll();
+        TicketListResponseDto actualFindAllResult = lotteryService.findAll();
 
         // Assert
         verify(lotteryRepository).findAll();
@@ -125,7 +125,7 @@ class LoterryServiceTest {
     }
 
     /**
-     * Method under test: {@link LoterryService#findAll()}
+     * Method under test: {@link LotteryService#findAll()}
      */
     @Test
     @DisplayName("service return 1 ticket when repo return 1 ticket and call repo 1 times")
@@ -141,7 +141,7 @@ class LoterryServiceTest {
         when(lotteryRepository.findAll()).thenReturn(lotteryList);
 
         // Act
-        TicketListResponseDto actualFindAllResult = loterryService.findAll();
+        TicketListResponseDto actualFindAllResult = lotteryService.findAll();
 
         // Assert
         verify(lotteryRepository).findAll();
@@ -149,7 +149,7 @@ class LoterryServiceTest {
     }
 
     /**
-     * Method under test: {@link LoterryService#findAll()}
+     * Method under test: {@link LotteryService#findAll()}
      */
     @Test
     @DisplayName("service return 2 ticket when repo return 2 ticket")
@@ -171,7 +171,7 @@ class LoterryServiceTest {
         when(lotteryRepository.findAll()).thenReturn(lotteryList);
 
         // Act
-        TicketListResponseDto actualFindAllResult = loterryService.findAll();
+        TicketListResponseDto actualFindAllResult = lotteryService.findAll();
 
         // Assert
         verify(lotteryRepository).findAll();
@@ -179,7 +179,7 @@ class LoterryServiceTest {
     }
 
     /**
-     * Method under test: {@link LoterryService#findAll()}
+     * Method under test: {@link LotteryService#findAll()}
      */
     @Test
     @DisplayName("service return 1 ticket when repo return 1 ticket and call tickets size()")
@@ -195,7 +195,7 @@ class LoterryServiceTest {
         when(lotteryRepository.findAll()).thenReturn(lotteryList);
 
         // Act
-        TicketListResponseDto actualFindAllResult = loterryService.findAll();
+        TicketListResponseDto actualFindAllResult = lotteryService.findAll();
 
         // Assert
         verify(lotteryRepository).findAll();

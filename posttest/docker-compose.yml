@@ -9,7 +9,7 @@ services:
     networks:
       - posttest-net
     environment:
-      - spring.datasource.url=jdbc:postgresql://postgres:5432/lottery
+      - DATABASE_URL=jdbc:postgresql://postgres:5432/lottery
     depends_on:
       - postgres
 

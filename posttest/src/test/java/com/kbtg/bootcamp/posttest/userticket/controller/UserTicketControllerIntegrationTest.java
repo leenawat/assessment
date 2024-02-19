@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith({SpringExtension.class,MockitoExtension.class})
+@ExtendWith({SpringExtension.class, MockitoExtension.class})
 @WebMvcTest({CustomWebSecurityConfigurerAdapterTest.class, UserTicketController.class})
 class UserTicketControllerIntegrationTest {
 
@@ -60,8 +60,8 @@ class UserTicketControllerIntegrationTest {
 
         // Act and Assert
         mockMvc.perform(requestBuilder)
-                .andExpect(jsonPath("$.errors",  hasSize(1)))
-                .andExpect(jsonPath("$.errors",  hasItem("getLotteriesByUserId.userId: must be a number only  and start with '0'")))
+                .andExpect(jsonPath("$.errors", hasSize(1)))
+                .andExpect(jsonPath("$.errors", hasItem("getLotteriesByUserId.userId: must be a number only  and start with '0'")))
                 .andExpect(status().is(400));
     }
 }

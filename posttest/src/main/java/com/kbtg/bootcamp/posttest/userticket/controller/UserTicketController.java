@@ -33,7 +33,7 @@ public class UserTicketController {
             @Pattern(regexp = "^\\d{6}$", message = "must be a number only")
             @Size(min = 6, max = 6, message = "must be a 6 digit")
             String ticketId) {
-            return new ResponseEntity<>(userTicketService.buyLotteries(userId, ticketId), HttpStatus.OK);
+        return new ResponseEntity<>(userTicketService.buyLotteries(userId, ticketId), HttpStatus.OK);
     }
 
     @GetMapping("/users/{userId}/lotteries")
