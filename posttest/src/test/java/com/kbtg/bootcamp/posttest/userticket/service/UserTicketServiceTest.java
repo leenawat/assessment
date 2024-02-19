@@ -1,10 +1,10 @@
 package com.kbtg.bootcamp.posttest.userticket.service;
 
-import com.kbtg.bootcamp.posttest.lottery.dto.TicketResponseDto;
 import com.kbtg.bootcamp.posttest.lottery.exception.LotteryUnavailableException;
 import com.kbtg.bootcamp.posttest.lottery.model.Lottery;
 import com.kbtg.bootcamp.posttest.lottery.repository.LotteryRepository;
 import com.kbtg.bootcamp.posttest.userticket.dto.UserTickerSummaryDto;
+import com.kbtg.bootcamp.posttest.userticket.exception.InvalidUserTicketException;
 import com.kbtg.bootcamp.posttest.userticket.model.UserTicket;
 import com.kbtg.bootcamp.posttest.userticket.repository.UserTicketRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +18,7 @@ import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,8 +33,6 @@ class UserTicketServiceTest {
     public static final int AMOUNT = 1;
     public static final int PRICE = 80;
     public static final String TICKET = "000001";
-    public static final String TICKET2 = "000002";
-    public static final String TICKET3 = "000003";
     public static final String USER_ID = "0881234567";
 
     @MockBean
@@ -64,8 +63,8 @@ class UserTicketServiceTest {
         when(lotteryRepository.findById(Mockito.<String>any())).thenReturn(ofResult);
 
         // Act and Assert
-        assertThrows(LotteryUnavailableException.class, () -> userTicketService.buyLotteries(USER_ID, USER_ID));
-        verify(lotteryRepository).findById(eq(USER_ID));
+        assertThrows(LotteryUnavailableException.class, () -> userTicketService.buyLotteries(USER_ID, TICKET));
+        verify(lotteryRepository).findById(eq(TICKET));
     }
 
     /**
@@ -75,7 +74,7 @@ class UserTicketServiceTest {
     @DisplayName("should 0 ticket when repo is 0 ticket")
     void testGetLotteriesByUserId() {
         // Arrange
-        ArrayList<UserTicket> userTicketList = new ArrayList<>();
+        List<UserTicket> userTicketList = new ArrayList<>();
         when(userTicketRepository.findByUserId(Mockito.<String>any())).thenReturn(userTicketList);
 
         // Act
@@ -171,11 +170,7 @@ class UserTicketServiceTest {
         // Arrange
         when(userTicketRepository.findByUserId(Mockito.<String>any())).thenReturn(new ArrayList<>());
 
-        // Act
-        TicketResponseDto actualDeleteLotteriesByUserIdResult = userTicketService.deleteLotteriesByUserId(USER_ID, TICKET);
-
-        // Assert
-        verify(userTicketRepository).findByUserId(eq(USER_ID));
-        assertNull(actualDeleteLotteriesByUserIdResult);
+        // Act & Assert
+        assertThrows(InvalidUserTicketException.class, () -> userTicketService.deleteLotteriesByUserId(USER_ID, TICKET));
     }
 }

@@ -2,6 +2,7 @@ package com.kbtg.bootcamp.posttest.exception;
 
 import com.kbtg.bootcamp.posttest.lottery.exception.LotteryDuplicateException;
 import com.kbtg.bootcamp.posttest.lottery.exception.LotteryUnavailableException;
+import com.kbtg.bootcamp.posttest.userticket.exception.InvalidUserTicketException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
@@ -34,23 +35,14 @@ public class GlobalExceptionHandler {
         return error;
     }
 
-    @ExceptionHandler(LotteryUnavailableException.class)
+    @ExceptionHandler({
+            LotteryUnavailableException.class,
+            InvalidUserTicketException.class,
+            LotteryDuplicateException.class
+    })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorDTO handleLotteryUnavailableException(HttpServletRequest request, Exception ex) {
-        ErrorDTO error = new ErrorDTO();
-        error.setTimestamp(new Date());
-        error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.addError(ex.getMessage());
-        error.setPath(request.getServletPath());
-        LOGGER.error(ex.getMessage(), ex);
-        return error;
-    }
-
-    @ExceptionHandler(LotteryDuplicateException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
-    public ErrorDTO handleLotteryDuplicateException(HttpServletRequest request, Exception ex) {
+    public ErrorDTO handleGlobalException(HttpServletRequest request, Exception ex) {
         ErrorDTO error = new ErrorDTO();
         error.setTimestamp(new Date());
         error.setStatus(HttpStatus.BAD_REQUEST.value());

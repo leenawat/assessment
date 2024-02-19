@@ -34,9 +34,9 @@ public class LotteryService {
     }
 
     public TicketListResponseDto findAll() {
-        return new TicketListResponseDto(lotteryRepository.findAll()
+        return new TicketListResponseDto(lotteryRepository.findAllAvailableLottery()
                 .stream()
-                .map(l -> l.getTicket()).
-                collect(Collectors.toList()));
+                .map(Lottery::getTicket)
+                .collect(Collectors.toList()));
     }
 }
